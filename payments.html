@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payments - FleetDrive V3</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script>
+        (function () {
+            const saved = localStorage.getItem('fleetdrive_theme');
+            const systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = saved || (systemDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo-group">
+                <a href="../Member-1-Home/index.html" class="logo">
+                    <img class="img" src="../images/image.png" alt="FleetDrive Logo">
+                    Fleet<span>Drive</span>
+                </a>
+            </div>
+            <div class="header-right">
+                <nav class="navbar" id="navbar">
+                    <a href="../Member-1-Home/index.html" class="nav-link">Home</a>
+                    <a href="../Member-2-Vehicles-Customers/vehicles.html" class="nav-link">Vehicles</a>
+                    <a href="../Member-2-Vehicles-Customers/customers.html" class="nav-link">Customers</a>
+                    <a href="../Member-3-Bookings-Rentals/bookings.html" class="nav-link">Bookings</a>
+                    <a href="../Member-3-Bookings-Rentals/rentals.html" class="nav-link">Rentals</a>
+                    <a href="../Member-4-Maintenance-Payments/maintenance.html" class="nav-link">Maintenance</a>
+                    <a href="../Member-4-Maintenance-Payments/payments.html" class="nav-link active">Payments</a>
+                </nav>
+                <button id="themeToggle" class="theme-toggle-btn" type="button" aria-label="Toggle Light and Dark Mode" title="Toggle Theme">
+                    <span class="theme-toggle-icon">🌙</span>
+                    <span class="theme-toggle-text">Dark</span>
+                </button>
+                <button class="mobile-nav-toggle" id="mobileNavToggle" type="button" aria-label="Toggle navigation menu">&#9776;</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="section-title">
+            <h2>Billing &amp; Payment Transactions</h2>
+            <p>Invoice settlements, digital payment confirmation, and booking status activation</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="statTotalRevenue" style="color: #059669;">Rs. 0</div>
+                <div class="stat-label">Total Revenue Collected</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statConfirmedTxCount" style="color: #16a34a;">0</div>
+                <div class="stat-label">Confirmed Transactions</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statPendingInvoices" style="color: #ea580c;">0</div>
+                <div class="stat-label">Pending Invoices (Unpaid)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statDigitalRatio" style="color: #2563eb;">100%</div>
+                <div class="stat-label">Digital Payment Ratio</div>
+            </div>
+        </div>
+
+        <!-- Filter Bar with Search -->
+        <div class="filter-bar">
+            <div class="filter-bar-left">
+                <div class="search-wrapper">
+                    <input type="text" id="paymentSearch" class="search-box" placeholder="Search by Booking ID, customer, payment method, status...">
+                    <button id="paymentSearchClear" class="search-clear-btn" type="button" aria-label="Clear search">&times;</button>
+                </div>
+                <select id="paymentMethodFilter" class="filter-select">
+                    <option value="">All Payment Methods</option>
+                    <option value="UPI">UPI / QR Code</option>
+                    <option value="Card">Debit / Credit Card</option>
+                    <option value="Net Banking">Net Banking</option>
+                    <option value="Cash">Cash Counter</option>
+                </select>
+            </div>
+            <a href="#collect-payment" class="btn-primary">+ Record Payment Receipt</a>
+        </div>
+
+        <!-- Payments Table -->
+        <div class="table-responsive">
+            <table id="paymentsTable">
+                <thead>
+                    <tr>
+                        <th>Transaction ID</th>
+                        <th>Booking ID</th>
+                        <th>Customer</th>
+                        <th>Vehicle</th>
+                        <th>Payment Mode</th>
+                        <th>Amount Paid</th>
+                        <th>Date &amp; Time</th>
+                        <th>Status</th>
+                        <th>Receipt</th>
+                    </tr>
+                </thead>
+                <tbody id="paymentsTableBody">
+                    <!-- Loaded dynamically from LocalStorage -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Payment Receipt Form Card -->
+        <div class="form-card" id="collect-payment">
+            <h3>Record Payment Receipt</h3>
+            <p>Enter the Booking ID to verify payment receipt. <strong>Confirming payment is the sole operation that changes Booking status from Pending Payment to Confirmed.</strong></p>
+            <form id="paymentForm" action="#" method="get" onsubmit="return false;">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Booking ID</label>
+                        <input type="text" id="paymentBookingId" placeholder="e.g. BK-103" required autocomplete="off">
+                        <small class="field-hint">Enter the Booking ID generated on the Bookings page. Details will auto-populate.</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Customer Name</label>
+                        <input type="text" id="paymentCustomer" placeholder="Auto-filled from Booking ID" required readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Payment Method</label>
+                        <select id="paymentMethod" required>
+                            <option>UPI (Google Pay / PhonePe / Paytm)</option>
+                            <option>Debit Card / Credit Card (POS)</option>
+                            <option>Net Banking (IMPS / NEFT)</option>
+                            <option>Cash Counter</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Amount Collected (Rs.)</label>
+                        <input type="number" id="paymentAmount" placeholder="Auto-filled from booking" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Payment Date</label>
+                        <input type="date" id="paymentDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Bank Ref / UTR / Receipt No.</label>
+                        <input type="text" id="paymentUtr" placeholder="e.g. UPI-20260925001" required>
+                    </div>
+                </div>
+
+                <!-- Booking Lookup Live Feedback -->
+                <div id="bookingLookup" class="booking-lookup" aria-live="polite">
+                    Enter a Booking ID to load customer details and payable amount.
+                </div>
+
+                <div class="form-actions">
+                    <button type="reset" class="btn-secondary" id="paymentResetBtn">Reset Form</button>
+                    <button type="submit" class="btn-primary" id="paymentSubmitBtn">Confirm &amp; Generate Payment Receipt</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2026 FleetDrive System - Mini Project Group 14.</p>
+            <div class="footer-links">
+                <a href="../Member-2-Vehicles-Customers/vehicles.html">Vehicles</a>
+                <a href="../Member-3-Bookings-Rentals/bookings.html">Bookings</a>
+                <a href="../Member-4-Maintenance-Payments/maintenance.html">Maintenance</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../common/data-manager.js"></script>
+    <script src="../common/ui-components.js"></script>
+    <script src="operations.js"></script>
+</body>
+
+</html>

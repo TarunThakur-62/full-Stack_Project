@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maintenance - FleetDrive V3</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script>
+        (function () {
+            const saved = localStorage.getItem('fleetdrive_theme');
+            const systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = saved || (systemDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo-group">
+                <a href="../Member-1-Home/index.html" class="logo">
+                    <img class="img" src="../images/image.png" alt="FleetDrive Logo">
+                    Fleet<span>Drive</span>
+                </a>
+            </div>
+            <div class="header-right">
+                <nav class="navbar" id="navbar">
+                    <a href="../Member-1-Home/index.html" class="nav-link">Home</a>
+                    <a href="../Member-2-Vehicles-Customers/vehicles.html" class="nav-link">Vehicles</a>
+                    <a href="../Member-2-Vehicles-Customers/customers.html" class="nav-link">Customers</a>
+                    <a href="../Member-3-Bookings-Rentals/bookings.html" class="nav-link">Bookings</a>
+                    <a href="../Member-3-Bookings-Rentals/rentals.html" class="nav-link">Rentals</a>
+                    <a href="../Member-4-Maintenance-Payments/maintenance.html" class="nav-link active">Maintenance</a>
+                    <a href="../Member-4-Maintenance-Payments/payments.html" class="nav-link">Payments</a>
+                </nav>
+                <button id="themeToggle" class="theme-toggle-btn" type="button" aria-label="Toggle Light and Dark Mode" title="Toggle Theme">
+                    <span class="theme-toggle-icon">🌙</span>
+                    <span class="theme-toggle-text">Dark</span>
+                </button>
+                <button class="mobile-nav-toggle" id="mobileNavToggle" type="button" aria-label="Toggle navigation menu">&#9776;</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="section-title">
+            <h2>Fleet Maintenance &amp; Service Management</h2>
+            <p>Workshop dispatches, periodic servicing, repairs, and vehicle availability status synchronization</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="statUnderMaintenanceNow" style="color: #dc2626;">0</div>
+                <div class="stat-label">Under Maintenance (In Progress)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statCompletedServices" style="color: #16a34a;">0</div>
+                <div class="stat-label">Completed Services</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statTotalServiceExpenses" style="color: #2563eb;">Rs. 0</div>
+                <div class="stat-label">Total Service Expenses</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statTotalMaintenanceRecords">0</div>
+                <div class="stat-label">Total Maintenance Logs</div>
+            </div>
+        </div>
+
+        <!-- Filter Bar with Search -->
+        <div class="filter-bar">
+            <div class="filter-bar-left">
+                <div class="search-wrapper">
+                    <input type="text" id="maintenanceSearch" class="search-box" placeholder="Search by Maintenance ID, vehicle, plate, status...">
+                    <button id="maintenanceSearchClear" class="search-clear-btn" type="button" aria-label="Clear search">&times;</button>
+                </div>
+                <select id="maintenanceStatusFilter" class="filter-select">
+                    <option value="">All Statuses</option>
+                    <option value="In Progress">In Progress (Under Maintenance)</option>
+                    <option value="Completed">Completed</option>
+                </select>
+            </div>
+            <a href="#log-service" class="btn-primary" id="btnScrollToLog">+ Schedule Service</a>
+        </div>
+
+        <!-- Maintenance Table -->
+        <div class="table-responsive">
+            <table id="maintenanceTable">
+                <thead>
+                    <tr>
+                        <th>Maintenance ID</th>
+                        <th>Vehicle &amp; Plate</th>
+                        <th>Service Type</th>
+                        <th>Workshop / Service Center</th>
+                        <th>Sent Date</th>
+                        <th>Completed Date</th>
+                        <th>Cost</th>
+                        <th>Work Description &amp; Notes</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="maintenanceTableBody">
+                    <!-- Populated dynamically by operations.js -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Log / Update Maintenance Form Card -->
+        <div class="form-card" id="log-service">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 8px;">
+                <h3 id="formTitle">Log New Vehicle Maintenance</h3>
+                <button type="button" id="btnCancelEdit" class="btn-secondary" style="display: none; padding: 5px 12px; font-size: 13px;">Cancel Edit &times;</button>
+            </div>
+            <p id="formSubtitle">Send a fleet vehicle for servicing or update an existing maintenance record. Marking as Completed restores vehicle availability.</p>
+            <form id="maintenanceForm" action="#" method="get" onsubmit="return false;">
+                <input type="hidden" id="editMaintenanceId" value="">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Select Fleet Vehicle</label>
+                        <select id="maintVehicle" required>
+                            <option value="">-- Choose Vehicle --</option>
+                            <option value="Tata Harrier (UP-85-TH-8899)">Tata Harrier (UP-85-TH-8899)</option>
+                            <option value="Toyota Fortuner (UP-85-TF-9999)">Toyota Fortuner (UP-85-TF-9999)</option>
+                            <option value="Hyundai Creta (UP-85-AB-1234)">Hyundai Creta (UP-85-AB-1234)</option>
+                            <option value="Mahindra Thar (UP-85-TR-4400)">Mahindra Thar (UP-85-TR-4400)</option>
+                            <option value="Honda City (UP-85-HC-3344)">Honda City (UP-85-HC-3344)</option>
+                            <option value="Hyundai Verna (UP-85-HV-5566)">Hyundai Verna (UP-85-HV-5566)</option>
+                            <option value="Maruti Suzuki Swift (UP-85-SW-5678)">Maruti Suzuki Swift (UP-85-SW-5678)</option>
+                            <option value="Tata Altroz (UP-85-TA-2211)">Tata Altroz (UP-85-TA-2211)</option>
+                            <option value="Royal Enfield Classic (UP-85-RE-9012)">Royal Enfield Classic (UP-85-RE-9012)</option>
+                            <option value="Honda Activa 6G (UP-85-AC-7788)">Honda Activa 6G (UP-85-AC-7788)</option>
+                            <option value="Kia Seltos (UP-85-KS-2202)">Kia Seltos (UP-85-KS-2202)</option>
+                            <option value="Toyota Innova (UP-85-IC-2707)">Toyota Innova (UP-85-IC-2707)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Service Category</label>
+                        <select id="maintType" required>
+                            <option>Periodic Routine Service</option>
+                            <option>Brake &amp; Suspension Repairs</option>
+                            <option>Engine Diagnostics &amp; Oil Change</option>
+                            <option>Wheel Balancing &amp; Alignment</option>
+                            <option>Air Conditioning Overhaul</option>
+                            <option>Body &amp; Paint Touchup</option>
+                            <option>Electrical &amp; Battery Service</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Service Center / Workshop</label>
+                        <input type="text" id="maintWorkshop" placeholder="e.g. Authorized Tata Service Mathura" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Date Sent In</label>
+                        <input type="date" id="maintDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Service Cost (Rs.)</label>
+                        <input type="number" id="maintCost" placeholder="e.g. 4500" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Maintenance Status</label>
+                        <select id="maintStatus" required>
+                            <option value="In Progress">In Progress (Vehicle Under Maintenance)</option>
+                            <option value="Completed">Completed (Restore Vehicle Availability)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="groupCompletedDate" style="display: none;">
+                        <label>Completion Date</label>
+                        <input type="date" id="maintCompletedDate">
+                    </div>
+                    <div class="form-group" style="grid-column: 1 / -1;">
+                        <label>Work Description &amp; Defect Notes</label>
+                        <input type="text" id="maintDesc" placeholder="e.g. Brake vibration at high speeds, 40k km periodic service and oil change" required>
+                    </div>
+                </div>
+
+                <div id="maintStatusNotice" class="booking-lookup" style="margin-top: 0;">
+                    When status is <strong>In Progress</strong>, the vehicle will be marked <strong>Under Maintenance</strong> and locked from booking/renting. When <strong>Completed</strong>, vehicle availability is restored.
+                </div>
+
+                <div class="form-actions">
+                    <button type="reset" class="btn-secondary" id="btnResetMaint">Reset Form</button>
+                    <button type="submit" class="btn-primary" id="btnSubmitMaint">Save Maintenance Record</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2026 FleetDrive System - Mini Project Group 14.</p>
+            <div class="footer-links">
+                <a href="../Member-2-Vehicles-Customers/vehicles.html">Vehicles</a>
+                <a href="../Member-3-Bookings-Rentals/bookings.html">Bookings</a>
+                <a href="../Member-4-Maintenance-Payments/maintenance.html">Maintenance</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../common/data-manager.js"></script>
+    <script src="../common/ui-components.js"></script>
+    <script src="operations.js"></script>
+</body>
+
+</html>
