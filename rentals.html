@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rentals - FleetDrive V3</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script>
+        (function () {
+            const saved = localStorage.getItem('fleetdrive_theme');
+            const systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = saved || (systemDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo-group">
+                <a href="../Member-1-Home/index.html" class="logo">
+                    <img class="img" src="../images/image.png" alt="FleetDrive Logo">
+                    Fleet<span>Drive</span>
+                </a>
+            </div>
+            <div class="header-right">
+                <nav class="navbar" id="navbar">
+                    <a href="../Member-1-Home/index.html" class="nav-link">Home</a>
+                    <a href="../Member-2-Vehicles-Customers/vehicles.html" class="nav-link">Vehicles</a>
+                    <a href="../Member-2-Vehicles-Customers/customers.html" class="nav-link">Customers</a>
+                    <a href="../Member-3-Bookings-Rentals/bookings.html" class="nav-link">Bookings</a>
+                    <a href="../Member-3-Bookings-Rentals/rentals.html" class="nav-link active">Rentals</a>
+                    <a href="../Member-4-Maintenance-Payments/maintenance.html" class="nav-link">Maintenance</a>
+                    <a href="../Member-4-Maintenance-Payments/payments.html" class="nav-link">Payments</a>
+                </nav>
+                <button id="themeToggle" class="theme-toggle-btn" type="button" aria-label="Toggle Light and Dark Mode" title="Toggle Theme">
+                    <span class="theme-toggle-icon">🌙</span>
+                    <span class="theme-toggle-text">Dark</span>
+                </button>
+                <button class="mobile-nav-toggle" id="mobileNavToggle" type="button" aria-label="Toggle navigation menu">&#9776;</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="section-title">
+            <h2>Fleet Rental Dispatches & Returns</h2>
+            <p>Vehicle handover inspection, on-road tracking, security deposits, and return completion</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="statVehiclesOnRoad" style="color: #2563eb;">0</div>
+                <div class="stat-label">Vehicles On Road (Active)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statReturnedRentals" style="color: #16a34a;">0</div>
+                <div class="stat-label">Vehicles Returned</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statActiveDeposits" style="color: #059669;">Rs. 0</div>
+                <div class="stat-label">Active Deposits Held</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statTotalRentals">0</div>
+                <div class="stat-label">Total Rental Dispatches</div>
+            </div>
+        </div>
+
+        <!-- Filter Bar with Real-time Search -->
+        <div class="filter-bar">
+            <div class="filter-bar-left">
+                <div class="search-wrapper">
+                    <input type="text" id="rentalSearch" class="search-box" placeholder="Search by Rental ID, Booking ID, customer, vehicle...">
+                    <button id="rentalSearchClear" class="search-clear-btn" type="button" aria-label="Clear search">&times;</button>
+                </div>
+                <select id="rentalStatusFilter" class="filter-select">
+                    <option value="">All Statuses</option>
+                    <option value="Active">On Road (Active)</option>
+                    <option value="Returned">Returned</option>
+                </select>
+            </div>
+            <div style="display: flex; gap: 8px;">
+                <a href="#dispatch-vehicle" class="btn-primary">+ Dispatch Vehicle</a>
+                <a href="#return-vehicle" class="btn-primary" style="background-color: #059669;">Process Return</a>
+            </div>
+        </div>
+
+        <!-- Rentals Table -->
+        <div class="table-responsive">
+            <table id="rentalsTable">
+                <thead>
+                    <tr>
+                        <th>Rental ID</th>
+                        <th>Booking ID</th>
+                        <th>Customer</th>
+                        <th>Vehicle & Plate</th>
+                        <th>Pickup Hub</th>
+                        <th>Start Date</th>
+                        <th>Expected Return</th>
+                        <th>Actual Return</th>
+                        <th>Security Deposit</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="rentalsTableBody">
+                    <!-- Loaded dynamically from LocalStorage -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Handover / Dispatch Form Card -->
+        <div class="form-card" id="dispatch-vehicle">
+            <h3>Vehicle Dispatch Handover</h3>
+            <p>Enter a confirmed Booking ID to load customer & vehicle details, record handover odometer, and dispatch.</p>
+            <form id="dispatchForm" action="#" method="get" onsubmit="return false;">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Booking ID (Reference)</label>
+                        <input type="text" id="rentalBookingId" placeholder="e.g. BK-101" required autocomplete="off">
+                        <small class="field-hint">Handover is locked until payment is Confirmed on the Payments page.</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Customer Name</label>
+                        <input type="text" id="rentalCustomer" placeholder="Auto-filled from Booking" readonly required>
+                    </div>
+                    <div class="form-group">
+                        <label>Vehicle & Model</label>
+                        <input type="text" id="rentalVehicle" placeholder="Auto-filled from Booking" readonly required>
+                    </div>
+                    <div class="form-group">
+                        <label>Pickup Hub</label>
+                        <input type="text" id="rentalHub" placeholder="Auto-filled from Booking" readonly required>
+                    </div>
+                    <div class="form-group">
+                        <label>Rental Start Date</label>
+                        <input type="date" id="rentalStartDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Expected Return Date</label>
+                        <input type="date" id="rentalEndDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Current Odometer (km)</label>
+                        <input type="number" id="rentalOdo" placeholder="e.g. 24500" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Fuel Tank Level</label>
+                        <select id="rentalFuel" required>
+                            <option>100% Full Tank</option>
+                            <option>75% Tank</option>
+                            <option>50% Tank</option>
+                            <option>25% Tank</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Security Deposit (Rs.)</label>
+                        <input type="number" id="rentalDeposit" placeholder="e.g. 5000" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Dispatch Officer / Hub</label>
+                        <input type="text" id="rentalOfficer" placeholder="e.g. Officer K. Singh (Mathura Cantt)" required>
+                    </div>
+                </div>
+
+                <!-- Booking Lookup Live Feedback Banner -->
+                <div id="rentalBookingLookup" class="booking-lookup" aria-live="polite">
+                    Enter a Booking ID above to verify confirmation status and auto-populate rental details.
+                </div>
+
+                <div class="form-actions">
+                    <button type="reset" class="btn-secondary" id="resetDispatchBtn">Reset Form</button>
+                    <button type="submit" class="btn-primary" id="submitDispatchBtn">Complete Handover & Dispatch</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Vehicle Return Inspection & Update Card -->
+        <div class="form-card" id="return-vehicle" style="border-left: 4px solid #16a34a;">
+            <h3>Vehicle Return Inspection & Availability Update</h3>
+            <p>Search active rental by Booking ID to log actual return date, inspect odometer, and restore vehicle availability.</p>
+            <form id="returnForm" action="#" method="get" onsubmit="return false;">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Booking ID / Rental ID to Return</label>
+                        <input type="text" id="returnSearchId" placeholder="e.g. BK-101 or RN-201" required autocomplete="off">
+                        <small class="field-hint">Search for an active rental currently on road.</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Customer Name</label>
+                        <input type="text" id="returnCustomer" placeholder="Auto-filled on search" readonly required>
+                    </div>
+                    <div class="form-group">
+                        <label>Vehicle Name</label>
+                        <input type="text" id="returnVehicleName" placeholder="Auto-filled on search" readonly required>
+                    </div>
+                    <div class="form-group">
+                        <label>Actual Return Date</label>
+                        <input type="date" id="returnActualDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Final Return Odometer (km)</label>
+                        <input type="number" id="returnFinalOdo" placeholder="e.g. 24850" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Deposit Refund / Status</label>
+                        <select id="returnDepositStatus">
+                            <option>Full Deposit Refunded</option>
+                            <option>Partial Refund (Deduction for fuel/delay)</option>
+                            <option>No Deposit Refunded</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="returnLookupBox" class="booking-lookup" aria-live="polite">
+                    Enter a Booking ID or Rental ID to load the active on-road rental.
+                </div>
+
+                <div class="form-actions">
+                    <button type="reset" class="btn-secondary" id="resetReturnBtn">Reset</button>
+                    <button type="submit" class="btn-primary" id="submitReturnBtn" style="background-color: #16a34a;">Mark Vehicle as Returned</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2026 FleetDrive System - Mini Project Group 14.</p>
+            <div class="footer-links">
+                <a href="../Member-2-Vehicles-Customers/vehicles.html">Vehicles</a>
+                <a href="../Member-3-Bookings-Rentals/bookings.html">Bookings</a>
+                <a href="../Member-4-Maintenance-Payments/maintenance.html">Maintenance</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../common/data-manager.js"></script>
+    <script src="../common/ui-components.js"></script>
+    <script src="bookings.js"></script>
+</body>
+
+</html>

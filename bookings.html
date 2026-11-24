@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookings - FleetDrive V3</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script>
+        (function () {
+            const saved = localStorage.getItem('fleetdrive_theme');
+            const systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = saved || (systemDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo-group">
+                <a href="../Member-1-Home/index.html" class="logo">
+                    <img class="img" src="../images/image.png" alt="FleetDrive Logo">
+                    Fleet<span>Drive</span>
+                </a>
+            </div>
+            <div class="header-right">
+                <nav class="navbar" id="navbar">
+                    <a href="../Member-1-Home/index.html" class="nav-link">Home</a>
+                    <a href="../Member-2-Vehicles-Customers/vehicles.html" class="nav-link">Vehicles</a>
+                    <a href="../Member-2-Vehicles-Customers/customers.html" class="nav-link">Customers</a>
+                    <a href="../Member-3-Bookings-Rentals/bookings.html" class="nav-link active">Bookings</a>
+                    <a href="../Member-3-Bookings-Rentals/rentals.html" class="nav-link">Rentals</a>
+                    <a href="../Member-4-Maintenance-Payments/maintenance.html" class="nav-link">Maintenance</a>
+                    <a href="../Member-4-Maintenance-Payments/payments.html" class="nav-link">Payments</a>
+                </nav>
+                <button id="themeToggle" class="theme-toggle-btn" type="button" aria-label="Toggle Light and Dark Mode" title="Toggle Theme">
+                    <span class="theme-toggle-icon">🌙</span>
+                    <span class="theme-toggle-text">Dark</span>
+                </button>
+                <button class="mobile-nav-toggle" id="mobileNavToggle" type="button" aria-label="Toggle navigation menu">&#9776;</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="section-title">
+            <h2>Rental Bookings & Reservations</h2>
+            <p>Active fleet vehicle reservations and two-state status tracking (Pending Payment &amp; Confirmed)</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="statTotalBookings">0</div>
+                <div class="stat-label">Total Reservations</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statConfirmedBookings" style="color: #16a34a;">0</div>
+                <div class="stat-label">Confirmed (Paid)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statPendingBookings" style="color: #ea580c;">0</div>
+                <div class="stat-label">Pending Payment (Orange)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statAvailableFleet" style="color: #2563eb;">32</div>
+                <div class="stat-label">Available Fleet Vehicles</div>
+            </div>
+        </div>
+
+        <!-- Filter Bar with Real-time Search -->
+        <div class="filter-bar">
+            <div class="filter-bar-left">
+                <div class="search-wrapper">
+                    <input type="text" id="bookingSearch" class="search-box" placeholder="Search by Booking ID, customer, vehicle, status...">
+                    <button id="bookingSearchClear" class="search-clear-btn" type="button" aria-label="Clear search">&times;</button>
+                </div>
+                <select id="bookingStatusFilter" class="filter-select">
+                    <option value="">All Booking Statuses</option>
+                    <option value="Confirmed">Confirmed (Green)</option>
+                    <option value="Pending Payment">Pending Payment (Orange)</option>
+                </select>
+            </div>
+            <a href="#new-booking" class="btn-primary">+ New Reservation</a>
+        </div>
+
+        <!-- Bookings Table -->
+        <div class="table-responsive">
+            <table id="bookingsTable">
+                <thead>
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>Customer</th>
+                        <th>Vehicle Reserved</th>
+                        <th>Pickup Hub</th>
+                        <th>Rental Period</th>
+                        <th>Duration</th>
+                        <th>Estimated Rent</th>
+                        <th>Booking Status</th>
+                    </tr>
+                </thead>
+                <tbody id="bookingsTableBody">
+                    <!-- Populated dynamically by bookings.js -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- New Reservation Form Card -->
+        <div class="form-card" id="new-booking">
+            <h3>Create New Reservation</h3>
+            <p>Reserve an available fleet vehicle. Newly created bookings are immediately set to <strong>Pending Payment</strong>.</p>
+            <form id="bookingForm" action="#" method="get" onsubmit="return false;">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Customer Name / ID</label>
+                        <input type="text" id="bkCustomer" placeholder="e.g. Rahul Sharma (CUST-101)" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Select Fleet Vehicle</label>
+                        <select id="bkVehicle" required>
+                            <option value="">-- Choose Available Vehicle --</option>
+                            <option>Hyundai Creta (Rs. 3200 / day)</option>
+                            <option>Mahindra Thar (Rs. 3800 / day)</option>
+                            <option>Toyota Fortuner (Rs. 5500 / day)</option>
+                            <option>Honda City (Rs. 2600 / day)</option>
+                            <option>Hyundai Verna (Rs. 2800 / day)</option>
+                            <option>Maruti Suzuki Swift (Rs. 1800 / day)</option>
+                            <option>Tata Altroz (Rs. 1900 / day)</option>
+                            <option>Royal Enfield Classic 350 (Rs. 1200 / day)</option>
+                            <option>Honda Activa 6G (Rs. 600 / day)</option>
+                            <option>Tata Harrier (Rs. 3500 / day)</option>
+                            <option>Kia Seltos (Rs. 3400 / day)</option>
+                            <option>Toyota Innova (Rs. 4200 / day)</option>
+                        </select>
+                        <small class="field-hint" id="vehicleMaintHint" style="display:none; color:#dc2626; font-weight:600;">
+                            ⚠️ Warning: This vehicle is currently under maintenance.
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label>Pickup Hub Location</label>
+                        <select id="bkHub" required>
+                            <option>Mathura Cantt Main Hub</option>
+                            <option>Mathura Railway Junction Hub</option>
+                            <option>NH-19 Highway Express Hub</option>
+                            <option>Vrindavan Gate Hub</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Pickup Date</label>
+                        <input type="date" id="bkPickupDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Return Date</label>
+                        <input type="date" id="bkReturnDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Booking Remarks</label>
+                        <input type="text" id="bkRemarks" placeholder="e.g. Outstation family trip, fastag required">
+                    </div>
+                </div>
+
+                <div id="bookingEstCard" class="booking-lookup" style="display: none;">
+                    <!-- Estimated rent preview -->
+                </div>
+
+                <div class="form-actions">
+                    <button type="reset" class="btn-secondary">Reset Form</button>
+                    <button type="submit" class="btn-primary">Confirm Reservation</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2026 FleetDrive System - Mini Project Group 14.</p>
+            <div class="footer-links">
+                <a href="../Member-2-Vehicles-Customers/vehicles.html">Vehicles</a>
+                <a href="../Member-3-Bookings-Rentals/bookings.html">Bookings</a>
+                <a href="../Member-4-Maintenance-Payments/maintenance.html">Maintenance</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../common/data-manager.js"></script>
+    <script src="../common/ui-components.js"></script>
+    <script src="bookings.js"></script>
+</body>
+
+</html>
