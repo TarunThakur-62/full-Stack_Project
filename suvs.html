@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUVs &amp; 4x4 Fleet - FleetDrive V3</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script>
+        (function () {
+            const saved = localStorage.getItem('fleetdrive_theme');
+            const systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = saved || (systemDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo-group">
+                <a href="../Member-1-Home/index.html" class="logo">
+                    <img class="img" src="../images/image.png" alt="FleetDrive Logo">
+                    Fleet<span>Drive</span>
+                </a>
+            </div>
+            <div class="header-right">
+                <nav class="navbar" id="navbar">
+                    <a href="../Member-1-Home/index.html" class="nav-link">Home</a>
+                    <a href="../Member-2-Vehicles-Customers/vehicles.html" class="nav-link active">Vehicles</a>
+                    <a href="../Member-2-Vehicles-Customers/customers.html" class="nav-link">Customers</a>
+                    <a href="../Member-3-Bookings-Rentals/bookings.html" class="nav-link">Bookings</a>
+                    <a href="../Member-3-Bookings-Rentals/rentals.html" class="nav-link">Rentals</a>
+                    <a href="../Member-4-Maintenance-Payments/maintenance.html" class="nav-link">Maintenance</a>
+                    <a href="../Member-4-Maintenance-Payments/payments.html" class="nav-link">Payments</a>
+                </nav>
+                <button id="themeToggle" class="theme-toggle-btn" type="button" aria-label="Toggle Light and Dark Mode"
+                    title="Toggle Theme">
+                    <span class="theme-toggle-icon">🌙</span>
+                    <span class="theme-toggle-text">Dark</span>
+                </button>
+                <button class="mobile-nav-toggle" id="mobileNavToggle" type="button"
+                    aria-label="Toggle navigation menu">&#9776;</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-container">
+        <div class="section-title">
+            <h2>SUVs &amp; 4x4 Fleet (14 Vehicles)</h2>
+            <p>Premium 5-seater &amp; 7-seater sports utility vehicles and off-roaders with high ground clearance</p>
+        </div>
+
+        <div class="stats-grid" style="margin-bottom: 24px;">
+            <div class="stat-card">
+                <div class="stat-number">14</div>
+                <div class="stat-label">Total SUVs</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" style="color: #16a34a;">10</div>
+                <div class="stat-label">Available for Rent</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" style="color: #2563eb;">2</div>
+                <div class="stat-label">Active Bookings</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" style="color: #dc2626;">2</div>
+                <div class="stat-label">In Maintenance</div>
+            </div>
+        </div>
+
+        <div class="filter-bar">
+            <div class="filter-bar-left">
+                <div class="search-wrapper">
+                    <input type="text" id="vehicleSearch" class="search-box"
+                        placeholder="Search SUVs by model, plate, status...">
+                    <button id="vehicleSearchClear" class="search-clear-btn" type="button"
+                        aria-label="Clear search">&times;</button>
+                </div>
+                <select id="vehicleStatusFilter" class="filter-select">
+                    <option value="">All Statuses</option>
+                    <option value="Available">Available</option>
+                    <option value="On Road">On Road (Active)</option>
+                    <option value="In Maintenance">In Maintenance</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="category-tabs">
+            <a href="../Member-2-Vehicles-Customers/vehicles.html" class="tab-btn">&larr; All Fleet (45)</a>
+            <a href="../Member-2-Vehicles-Customers/suvs.html" class="tab-btn active">SUVs (14)</a>
+            <a href="../Member-2-Vehicles-Customers/sedans.html" class="tab-btn">Sedans (12)</a>
+            <a href="../Member-2-Vehicles-Customers/hatchbacks.html" class="tab-btn">Hatchbacks (11)</a>
+            <a href="../Member-2-Vehicles-Customers/two-wheelers.html" class="tab-btn">Two-Wheelers (8)</a>
+        </div>
+
+        <div class="vehicles-grid">
+            <!-- SUV 1: Hyundai Creta -->
+            <div class="vehicle-card">
+                <img src="../images/hyundai creta.jpg" alt="Hyundai Creta" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">SUV</span>
+                        <span class="badge status-available">Available</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-AB-1234</span>
+                    <h3>Hyundai Creta SX(O)</h3>
+                    <p class="vehicle-specs">5 Seats | 1.5L Diesel | Automatic | 18 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 3200 / day</span>
+                        <a href="../Member-3-Bookings-Rentals/bookings.html" class="btn-card">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUV 2: Mahindra Thar -->
+            <div class="vehicle-card">
+                <img src="../images/mahindra thar.jpg" alt="Mahindra Thar" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">SUV</span>
+                        <span class="badge status-pending">Booked</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-CD-2021</span>
+                    <h3>Mahindra Thar LX 4x4</h3>
+                    <p class="vehicle-specs">4 Seats | 2.2L Diesel | Manual 4x4 | 14 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 3800 / day</span>
+                        <a href="../Member-3-Bookings-Rentals/bookings.html" class="btn-card booked">Reserved</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUV 3: Tata Harrier -->
+            <div class="vehicle-card">
+                <img src="../images/tata harrier.jpg" alt="Tata Harrier" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">SUV</span>
+                        <span class="badge status-maintenance">In Maintenance</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-TH-8899</span>
+                    <h3>Tata Harrier Fearless+</h3>
+                    <p class="vehicle-specs">5 Seats | 2.0L Diesel | Automatic | 16 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 3500 / day</span>
+                        <a href="../Member-4-Maintenance-Payments/maintenance.html" class="btn-card disabled">In
+                            Service</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUV 4: Toyota Fortuner -->
+            <div class="vehicle-card">
+                <img src="../images/toyota fortuner.jpg" alt="Toyota Fortuner" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">SUV</span>
+                        <span class="badge status-maintenance">In Maintenance</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-TF-9999</span>
+                    <h3>Toyota Fortuner Legender</h3>
+                    <p class="vehicle-specs">7 Seats | 2.8L Diesel | Auto 4x4 | 12 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 5800 / day</span>
+                        <a href="../Member-4-Maintenance-Payments/maintenance.html" class="btn-card disabled">In
+                            Service</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUV 5: Mahindra Scorpio-N -->
+            <div class="vehicle-card">
+                <img src="../images/mahindra scorpio.jpg" alt="Mahindra Scorpio-N" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">SUV</span>
+                        <span class="badge status-available">Available</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-SN-2101</span>
+                    <h3>Mahindra Scorpio-N Z8</h3>
+                    <p class="vehicle-specs">7 Seats | 2.2L mHawk Diesel | Manual | 15 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 3600 / day</span>
+                        <a href="../Member-3-Bookings-Rentals/bookings.html" class="btn-card">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUV 6: Kia Seltos -->
+            <div class="vehicle-card">
+                <img src="../images/kia seltos.jpg" alt="Kia Seltos" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">SUV</span>
+                        <span class="badge status-available">Available</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-KS-2202</span>
+                    <h3>Kia Seltos GTX+</h3>
+                    <p class="vehicle-specs">5 Seats | 1.5L Turbo Petrol | DCT | 17 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 3100 / day</span>
+                        <a href="../Member-3-Bookings-Rentals/bookings.html" class="btn-card">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUV 7: Tata Safari -->
+            <div class="vehicle-card">
+                <img src="../images/tata safari.jpg" alt="Tata Safari" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">SUV</span>
+                        <span class="badge status-active">On Rent</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-TS-2303</span>
+                    <h3>Tata Safari Dark Edition</h3>
+                    <p class="vehicle-specs">7 Seats | 2.0L Kryotec Diesel | Auto | 15 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 4200 / day</span>
+                        <a href="../Member-3-Bookings-Rentals/rentals.html" class="btn-card booked">On Rental</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUV 8: Mahindra XUV700 -->
+            <div class="vehicle-card">
+                <img src="../images/mahindra xuv700.jpg" alt="Mahindra XUV700" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">SUV</span>
+                        <span class="badge status-available">Available</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-XU-2404</span>
+                    <h3>Mahindra XUV700 AX7</h3>
+                    <p class="vehicle-specs">7 Seats | 2.2L mHawk Diesel | Auto | 15 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 4000 / day</span>
+                        <a href="../Member-3-Bookings-Rentals/bookings.html" class="btn-card">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUV 9: Maruti Suzuki Brezza -->
+            <div class="vehicle-card">
+                <img src="../images/maruti brezza.jpg" alt="Maruti Suzuki Brezza" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">SUV</span>
+                        <span class="badge status-available">Available</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-BZ-2505</span>
+                    <h3>Maruti Suzuki Brezza ZXi</h3>
+                    <p class="vehicle-specs">5 Seats | 1.5L Smart Hybrid | Manual | 20 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 2400 / day</span>
+                        <a href="../Member-3-Bookings-Rentals/bookings.html" class="btn-card">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUV 10: Hyundai Venue -->
+            <div class="vehicle-card">
+                <img src="../images/hyundai venue.jpg" alt="Hyundai Venue" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">SUV</span>
+                        <span class="badge status-available">Available</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-VN-2606</span>
+                    <h3>Hyundai Venue SX</h3>
+                    <p class="vehicle-specs">5 Seats | 1.0L Turbo Petrol | DCT | 18 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 2300 / day</span>
+                        <a href="../Member-3-Bookings-Rentals/bookings.html" class="btn-card">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUV 11: Toyota Innova Crysta -->
+            <div class="vehicle-card">
+                <img src="../images/toyota innova.jpg" alt="Toyota Innova Crysta" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">SUV</span>
+                        <span class="badge status-available">Available</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-IC-2707</span>
+                    <h3>Toyota Innova Crysta ZX</h3>
+                    <p class="vehicle-specs">7 Seats | 2.4L Diesel | Manual | 14 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 4500 / day</span>
+                        <a href="../Member-3-Bookings-Rentals/bookings.html" class="btn-card">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUV 12: MG Hector -->
+            <div class="vehicle-card">
+                <img src="../images/mg hector.jpg" alt="MG Hector" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">SUV</span>
+                        <span class="badge status-available">Available</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-MH-2808</span>
+                    <h3>MG Hector Sharp Pro</h3>
+                    <p class="vehicle-specs">5 Seats | 2.0L Diesel | Manual | 16 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 3300 / day</span>
+                        <a href="../Member-3-Bookings-Rentals/bookings.html" class="btn-card">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUV 13: Mahindra Bolero -->
+            <div class="vehicle-card">
+                <img src="../images/mahindra bolero.jpg" alt="Mahindra Bolero" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">SUV</span>
+                        <span class="badge status-available">Available</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-BL-2909</span>
+                    <h3>Mahindra Bolero Neo</h3>
+                    <p class="vehicle-specs">7 Seats | 1.5L mHawk75 Diesel | Manual | 16 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 2100 / day</span>
+                        <a href="../Member-3-Bookings-Rentals/bookings.html" class="btn-card">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SUV 14: Force Gurkha -->
+            <div class="vehicle-card">
+                <img src="../images/force gurkha.jpg" alt="Force Gurkha" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">SUV</span>
+                        <span class="badge status-available">Available</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-FG-3010</span>
+                    <h3>Force Gurkha 4x4</h3>
+                    <p class="vehicle-specs">4 Seats | 2.6L Mercedes Diesel | 4x4 Diff-Lock | 13 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 3500 / day</span>
+                        <a href="../Member-3-Bookings-Rentals/bookings.html" class="btn-card">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2026 FleetDrive System - Mini Project Group 14.</p>
+            <div class="footer-links">
+                <a href="../Member-2-Vehicles-Customers/vehicles.html">Vehicles</a>
+                <a href="../Member-3-Bookings-Rentals/bookings.html">Bookings</a>
+                <a href="../Member-4-Maintenance-Payments/maintenance.html">Maintenance</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../common/data-manager.js"></script>
+    <script src="../common/ui-components.js"></script>
+    <script src="vehicles.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hatchbacks Fleet - FleetDrive V3</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script>
+        (function () {
+            const saved = localStorage.getItem('fleetdrive_theme');
+            const systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = saved || (systemDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo-group">
+                <a href="../Member-1-Home/index.html" class="logo">
+                    <img class="img" src="../images/image.png" alt="FleetDrive Logo">
+                    Fleet<span>Drive</span>
+                </a>
+            </div>
+            <div class="header-right">
+                <nav class="navbar" id="navbar">
+                    <a href="../Member-1-Home/index.html" class="nav-link">Home</a>
+                    <a href="../Member-2-Vehicles-Customers/vehicles.html" class="nav-link active">Vehicles</a>
+                    <a href="../Member-2-Vehicles-Customers/customers.html" class="nav-link">Customers</a>
+                    <a href="../Member-3-Bookings-Rentals/bookings.html" class="nav-link">Bookings</a>
+                    <a href="../Member-3-Bookings-Rentals/rentals.html" class="nav-link">Rentals</a>
+                    <a href="../Member-4-Maintenance-Payments/maintenance.html" class="nav-link">Maintenance</a>
+                    <a href="../Member-4-Maintenance-Payments/payments.html" class="nav-link">Payments</a>
+                </nav>
+                <button id="themeToggle" class="theme-toggle-btn" type="button" aria-label="Toggle Light and Dark Mode" title="Toggle Theme">
+                    <span class="theme-toggle-icon">🌙</span>
+                    <span class="theme-toggle-text">Dark</span>
+                </button>
+                <button class="mobile-nav-toggle" id="mobileNavToggle" type="button" aria-label="Toggle navigation menu">&#9776;</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-container">
+        <div class="section-title">
+            <h2>Compact &amp; City Hatchbacks (11 Vehicles)</h2>
+            <p>Economical, nimble 5-seater hatchbacks with outstanding fuel economy and parking ease</p>
+        </div>
+
+        <div class="stats-grid" style="margin-bottom: 24px;">
+            <div class="stat-card">
+                <div class="stat-number">11</div>
+                <div class="stat-label">Total Hatchbacks</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" style="color: #16a34a;">8</div>
+                <div class="stat-label">Available for Rent</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" style="color: #2563eb;">3</div>
+                <div class="stat-label">Active Bookings</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" style="color: #64748b;">0</div>
+                <div class="stat-label">In Maintenance</div>
+            </div>
+        </div>
+
+        <div class="filter-bar">
+            <div class="filter-bar-left">
+                <div class="search-wrapper">
+                    <input type="text" id="vehicleSearch" class="search-box" placeholder="Search Hatchbacks by model, plate, status...">
+                    <button id="vehicleSearchClear" class="search-clear-btn" type="button" aria-label="Clear search">&times;</button>
+                </div>
+                <select id="vehicleStatusFilter" class="filter-select">
+                    <option value="">All Statuses</option>
+                    <option value="Available">Available</option>
+                    <option value="On Road">On Road (Active)</option>
+                    <option value="In Maintenance">In Maintenance</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="category-tabs">
+            <a href="../Member-2-Vehicles-Customers/vehicles.html" class="tab-btn">&larr; All Fleet (45)</a>
+            <a href="../Member-2-Vehicles-Customers/suvs.html" class="tab-btn">SUVs (14)</a>
+            <a href="../Member-2-Vehicles-Customers/sedans.html" class="tab-btn">Sedans (12)</a>
+            <a href="../Member-2-Vehicles-Customers/hatchbacks.html" class="tab-btn active">Hatchbacks (11)</a>
+            <a href="../Member-2-Vehicles-Customers/two-wheelers.html" class="tab-btn">Two-Wheelers (8)</a>
+        </div>
+
+        <div class="vehicles-grid">
+            <!-- Hatchback 1: Swift -->
+            <div class="vehicle-card">
+                <img src="../images/maruti swift.jpg" alt="Maruti Suzuki Swift" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">Hatchback</span>
+                        <span class="badge status-active">On Rent</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-SW-5678</span>
+                    <h3>Maruti Suzuki Swift ZXi+</h3>
+                    <p class="vehicle-specs">5 Seats | 1.2L Petrol | Manual | 22 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 1800 / day</span>
+                        <a href="../Member-3-Bookings-Rentals/rentals.html" class="btn-card booked">On Rental</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hatchback 2: Altroz -->
+            <div class="vehicle-card">
+                <img src="../images/tata altroz.jpg" alt="Tata Altroz" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">Hatchback</span>
+                        <span class="badge status-pending">Booked</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-OP-8081</span>
+                    <h3>Tata Altroz XZ+ Diesel</h3>
+                    <p class="vehicle-specs">5 Seats | 1.5L Diesel | Manual | 23 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 1900 / day</span>
+                        <a href="../Member-3-Bookings-Rentals/bookings.html" class="btn-card booked">Reserved</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hatchback 3: Hyundai i20 -->
+            <div class="vehicle-card">
+                <img src="../images/hyundai i20.jpg" alt="Hyundai i20" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">Hatchback</span>
+                        <span class="badge status-available">Available</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-HI-4303</span>
+                    <h3>Hyundai i20 Asta(O)</h3>
+                    <p class="vehicle-specs">5 Seats | 1.2L Kappa Petrol | IVT Auto | 20 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 2000 / day</span>
+                        <a href="../Member-3-Bookings-Rentals/bookings.html" class="btn-card">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hatchback 4: Maruti Suzuki Baleno -->
+            <div class="vehicle-card">
+                <img src="../images/maruti baleno.jpg" alt="Maruti Suzuki Baleno" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">Hatchback</span>
+                        <span class="badge status-available">Available</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-MB-4404</span>
+                    <h3>Maruti Suzuki Baleno Alpha</h3>
+                    <p class="vehicle-specs">5 Seats | 1.2L DualJet Petrol | Auto | 22 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 1900 / day</span>
+                        <a href="../Member-3-Bookings-Rentals/bookings.html" class="btn-card">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hatchback 5: Maruti Suzuki WagonR -->
+            <div class="vehicle-card">
+                <img src="../images/maruti wagonr.jpg" alt="Maruti Suzuki WagonR" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">Hatchback</span>
+                        <span class="badge status-available">Available</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-WR-4505</span>
+                    <h3>Maruti Suzuki WagonR ZXi</h3>
+                    <p class="vehicle-specs">5 Seats | 1.2L Petrol | Manual | 24 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 1500 / day</span>
+                        <a href="../Member-3-Bookings-Rentals/bookings.html" class="btn-card">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hatchback 6: Tata Tiago -->
+            <div class="vehicle-card">
+                <img src="../images/tata tiago.jpg" alt="Tata Tiago" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">Hatchback</span>
+                        <span class="badge status-pending">Booked</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-TI-4606</span>
+                    <h3>Tata Tiago XZ+</h3>
+                    <p class="vehicle-specs">5 Seats | 1.2L Revotron Petrol | Manual | 20 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 1600 / day</span>
+                        <a href="../Member-3-Bookings-Rentals/bookings.html" class="btn-card booked">Reserved</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hatchback 7: Hyundai Grand i10 -->
+            <div class="vehicle-card">
+                <img src="../images/hyundai grand i10.jpg" alt="Hyundai Grand i10 Nios" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">Hatchback</span>
+                        <span class="badge status-available">Available</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-GI-4707</span>
+                    <h3>Hyundai Grand i10 Nios</h3>
+                    <p class="vehicle-specs">5 Seats | 1.2L Kappa Petrol | AMT Auto | 21 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 1650 / day</span>
+                        <a href="../Member-3-Bookings-Rentals/bookings.html" class="btn-card">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hatchback 8: Renault Kwid -->
+            <div class="vehicle-card">
+                <img src="../images/renault kwid.jpg" alt="Renault Kwid" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">Hatchback</span>
+                        <span class="badge status-available">Available</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-RK-4808</span>
+                    <h3>Renault Kwid Climber</h3>
+                    <p class="vehicle-specs">5 Seats | 1.0L SCe Petrol | AMT Auto | 22 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 1400 / day</span>
+                        <a href="../Member-3-Bookings-Rentals/bookings.html" class="btn-card">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hatchback 9: Maruti Suzuki Alto K10 -->
+            <div class="vehicle-card">
+                <img src="../images/maruti alto.jpg" alt="Maruti Suzuki Alto K10" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">Hatchback</span>
+                        <span class="badge status-available">Available</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-AL-4909</span>
+                    <h3>Maruti Suzuki Alto K10</h3>
+                    <p class="vehicle-specs">5 Seats | 1.0L K-Series Petrol | Manual | 25 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 1200 / day</span>
+                        <a href="../Member-3-Bookings-Rentals/bookings.html" class="btn-card">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hatchback 10: Maruti Suzuki Ignis -->
+            <div class="vehicle-card">
+                <img src="../images/maruti ignis.jpg" alt="Maruti Suzuki Ignis" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">Hatchback</span>
+                        <span class="badge status-available">Available</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-IG-5010</span>
+                    <h3>Maruti Suzuki Ignis Alpha</h3>
+                    <p class="vehicle-specs">5 Seats | 1.2L Petrol | Manual | 21 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 1700 / day</span>
+                        <a href="../Member-3-Bookings-Rentals/bookings.html" class="btn-card">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hatchback 11: Citroen C3 -->
+            <div class="vehicle-card">
+                <img src="../images/citroen c3.jpg" alt="Citroen C3" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">Hatchback</span>
+                        <span class="badge status-available">Available</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-CC-5111</span>
+                    <h3>Citroen C3 Shine</h3>
+                    <p class="vehicle-specs">5 Seats | 1.2L PureTech Turbo | Manual | 19 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 1750 / day</span>
+                        <a href="../Member-3-Bookings-Rentals/bookings.html" class="btn-card">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2026 FleetDrive System - Mini Project Group 14.</p>
+            <div class="footer-links">
+                <a href="../Member-2-Vehicles-Customers/vehicles.html">Vehicles</a>
+                <a href="../Member-3-Bookings-Rentals/bookings.html">Bookings</a>
+                <a href="../Member-4-Maintenance-Payments/maintenance.html">Maintenance</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../common/data-manager.js"></script>
+    <script src="../common/ui-components.js"></script>
+    <script src="vehicles.js"></script>
+</body>
+
+</html>

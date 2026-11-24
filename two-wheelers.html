@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two-Wheelers Fleet - FleetDrive V3</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script>
+        (function () {
+            const saved = localStorage.getItem('fleetdrive_theme');
+            const systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = saved || (systemDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo-group">
+                <a href="../Member-1-Home/index.html" class="logo">
+                    <img class="img" src="../images/image.png" alt="FleetDrive Logo">
+                    Fleet<span>Drive</span>
+                </a>
+            </div>
+            <div class="header-right">
+                <nav class="navbar" id="navbar">
+                    <a href="../Member-1-Home/index.html" class="nav-link">Home</a>
+                    <a href="../Member-2-Vehicles-Customers/vehicles.html" class="nav-link active">Vehicles</a>
+                    <a href="../Member-2-Vehicles-Customers/customers.html" class="nav-link">Customers</a>
+                    <a href="../Member-3-Bookings-Rentals/bookings.html" class="nav-link">Bookings</a>
+                    <a href="../Member-3-Bookings-Rentals/rentals.html" class="nav-link">Rentals</a>
+                    <a href="../Member-4-Maintenance-Payments/maintenance.html" class="nav-link">Maintenance</a>
+                    <a href="../Member-4-Maintenance-Payments/payments.html" class="nav-link">Payments</a>
+                </nav>
+                <button id="themeToggle" class="theme-toggle-btn" type="button" aria-label="Toggle Light and Dark Mode"
+                    title="Toggle Theme">
+                    <span class="theme-toggle-icon">🌙</span>
+                    <span class="theme-toggle-text">Dark</span>
+                </button>
+                <button class="mobile-nav-toggle" id="mobileNavToggle" type="button"
+                    aria-label="Toggle navigation menu">&#9776;</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="main-container">
+        <div class="section-title">
+            <h2>Bikes &amp; Scooters Fleet (8 Vehicles)</h2>
+            <p>Iconic touring cruisers and reliable automatic scooters for swift local transit and heritage rides</p>
+        </div>
+
+        <div class="stats-grid" style="margin-bottom: 24px;">
+            <div class="stat-card">
+                <div class="stat-number">8</div>
+                <div class="stat-label">Total Two-Wheelers</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" style="color: #16a34a;">5</div>
+                <div class="stat-label">Available for Rent</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" style="color: #2563eb;">2</div>
+                <div class="stat-label">Active Bookings</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" style="color: #dc2626;">1</div>
+                <div class="stat-label">In Maintenance</div>
+            </div>
+        </div>
+
+        <div class="filter-bar">
+            <div class="filter-bar-left">
+                <div class="search-wrapper">
+                    <input type="text" id="vehicleSearch" class="search-box"
+                        placeholder="Search Two-Wheelers by model, plate, status...">
+                    <button id="vehicleSearchClear" class="search-clear-btn" type="button"
+                        aria-label="Clear search">&times;</button>
+                </div>
+                <select id="vehicleStatusFilter" class="filter-select">
+                    <option value="">All Statuses</option>
+                    <option value="Available">Available</option>
+                    <option value="On Road">On Road (Active)</option>
+                    <option value="In Maintenance">In Maintenance</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="category-tabs">
+            <a href="../Member-2-Vehicles-Customers/vehicles.html" class="tab-btn">&larr; All Fleet (45)</a>
+            <a href="../Member-2-Vehicles-Customers/suvs.html" class="tab-btn">SUVs (14)</a>
+            <a href="../Member-2-Vehicles-Customers/sedans.html" class="tab-btn">Sedans (12)</a>
+            <a href="../Member-2-Vehicles-Customers/hatchbacks.html" class="tab-btn">Hatchbacks (11)</a>
+            <a href="../Member-2-Vehicles-Customers/two-wheelers.html" class="tab-btn active">Two-Wheelers (8)</a>
+        </div>
+
+        <div class="vehicles-grid">
+            <!-- Bike 1: Royal Enfield Classic 350 -->
+            <div class="vehicle-card">
+                <img src="../images/Royal Enfield Classic.jpg" alt="Royal Enfield Classic 350" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">Two-Wheeler</span>
+                        <span class="badge status-maintenance">In Maintenance</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-RE-9012</span>
+                    <h3>Royal Enfield Classic 350</h3>
+                    <p class="vehicle-specs">2 Seats | 349cc Petrol | Manual | 35 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 1200 / day</span>
+                        <a href="../Member-4-Maintenance-Payments/maintenance.html" class="btn-card disabled">In
+                            Service</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bike 2: Honda Activa 6G -->
+            <div class="vehicle-card">
+                <img src="../images/honda activa.jpg" alt="Honda Activa 6G" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">Two-Wheeler</span>
+                        <span class="badge status-pending">Booked</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-ST-0101</span>
+                    <h3>Honda Activa 6G DLX</h3>
+                    <p class="vehicle-specs">2 Seats | 109.5cc Petrol | Automatic | 48 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 600 / day</span>
+                        <a href="../Member-3-Bookings-Rentals/bookings.html" class="btn-card booked">Reserved</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bike 3: Royal Enfield Meteor 350 -->
+            <div class="vehicle-card">
+                <img src="../images/royal enfield meteor.jpg" alt="Royal Enfield Meteor 350" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">Two-Wheeler</span>
+                        <span class="badge status-available">Available</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-RM-5303</span>
+                    <h3>Royal Enfield Meteor 350</h3>
+                    <p class="vehicle-specs">2 Seats | 349cc J-Series Petrol | Dual-ABS | 36 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 1400 / day</span>
+                        <a href="../Member-3-Bookings-Rentals/bookings.html" class="btn-card">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bike 4: TVS Jupiter 125 -->
+            <div class="vehicle-card">
+                <img src="../images/tvs jupiter.jpg" alt="TVS Jupiter 125" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">Two-Wheeler</span>
+                        <span class="badge status-available">Available</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-TJ-5404</span>
+                    <h3>TVS Jupiter 125</h3>
+                    <p class="vehicle-specs">2 Seats | 124.8cc Petrol | Automatic | 50 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 550 / day</span>
+                        <a href="../Member-3-Bookings-Rentals/bookings.html" class="btn-card">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bike 5: Suzuki Access 125 -->
+            <div class="vehicle-card">
+                <img src="../images/suzuki access.jpg" alt="Suzuki Access 125" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">Two-Wheeler</span>
+                        <span class="badge status-available">Available</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-SA-5505</span>
+                    <h3>Suzuki Access 125</h3>
+                    <p class="vehicle-specs">2 Seats | 124cc SEP Petrol | Automatic | 49 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 600 / day</span>
+                        <a href="../Member-3-Bookings-Rentals/bookings.html" class="btn-card">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bike 6: Bajaj Pulsar 150 -->
+            <div class="vehicle-card">
+                <img src="../images/bajaj pulsar.jpg" alt="Bajaj Pulsar 150" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">Two-Wheeler</span>
+                        <span class="badge status-active">On Rent</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-BP-5606</span>
+                    <h3>Bajaj Pulsar 150</h3>
+                    <p class="vehicle-specs">2 Seats | 149.5cc DTS-i Petrol | 5-Speed | 45 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 900 / day</span>
+                        <a href="../Member-3-Bookings-Rentals/rentals.html" class="btn-card booked">On Rental</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bike 7: Yamaha FZ-S V4 -->
+            <div class="vehicle-card">
+                <img src="../images/yamaha fz.jpg" alt="Yamaha FZ-S V4" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">Two-Wheeler</span>
+                        <span class="badge status-available">Available</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-YF-5707</span>
+                    <h3>Yamaha FZ-S V4</h3>
+                    <p class="vehicle-specs">2 Seats | 149cc FI Petrol | Traction Control | 45 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 950 / day</span>
+                        <a href="../Member-3-Bookings-Rentals/bookings.html" class="btn-card">Book Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bike 8: TVS Ntorq 125 -->
+            <div class="vehicle-card">
+                <img src="../images/tvs ntorq.jpg" alt="TVS Ntorq 125" class="vehicle-img">
+                <div class="card-body">
+                    <div class="card-badges">
+                        <span class="badge badge-category">Two-Wheeler</span>
+                        <span class="badge status-available">Available</span>
+                    </div>
+                    <span class="vehicle-plate">UP-85-TN-5808</span>
+                    <h3>TVS Ntorq 125 Race</h3>
+                    <p class="vehicle-specs">2 Seats | 124.8cc 3-Valve Petrol | Automatic | 47 km/l</p>
+                    <div class="card-footer">
+                        <span class="price">Rs. 700 / day</span>
+                        <a href="../Member-3-Bookings-Rentals/bookings.html" class="btn-card">Book Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2026 FleetDrive System - Mini Project Group 14.</p>
+            <div class="footer-links">
+                <a href="../Member-2-Vehicles-Customers/vehicles.html">Vehicles</a>
+                <a href="../Member-3-Bookings-Rentals/bookings.html">Bookings</a>
+                <a href="../Member-4-Maintenance-Payments/maintenance.html">Maintenance</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../common/data-manager.js"></script>
+    <script src="../common/ui-components.js"></script>
+    <script src="vehicles.js"></script>
+</body>
+
+</html>

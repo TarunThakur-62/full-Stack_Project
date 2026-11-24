@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customers - FleetDrive V3</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script>
+        (function () {
+            const saved = localStorage.getItem('fleetdrive_theme');
+            const systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = saved || (systemDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo-group">
+                <a href="../Member-1-Home/index.html" class="logo">
+                    <img class="img" src="../images/image.png" alt="FleetDrive Logo">
+                    Fleet<span>Drive</span>
+                </a>
+            </div>
+            <div class="header-right">
+                <nav class="navbar" id="navbar">
+                    <a href="../Member-1-Home/index.html" class="nav-link">Home</a>
+                    <a href="../Member-2-Vehicles-Customers/vehicles.html" class="nav-link">Vehicles</a>
+                    <a href="../Member-2-Vehicles-Customers/customers.html" class="nav-link active">Customers</a>
+                    <a href="../Member-3-Bookings-Rentals/bookings.html" class="nav-link">Bookings</a>
+                    <a href="../Member-3-Bookings-Rentals/rentals.html" class="nav-link">Rentals</a>
+                    <a href="../Member-4-Maintenance-Payments/maintenance.html" class="nav-link">Maintenance</a>
+                    <a href="../Member-4-Maintenance-Payments/payments.html" class="nav-link">Payments</a>
+                </nav>
+                <button id="themeToggle" class="theme-toggle-btn" type="button" aria-label="Toggle Light and Dark Mode" title="Toggle Theme">
+                    <span class="theme-toggle-icon">🌙</span>
+                    <span class="theme-toggle-text">Dark</span>
+                </button>
+                <button class="mobile-nav-toggle" id="mobileNavToggle" type="button" aria-label="Toggle navigation menu">&#9776;</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="section-title">
+            <h2>Customer Management</h2>
+            <p>Verified driver profiles, contact records, and rental eligibility</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="statTotalCustomers">0</div>
+                <div class="stat-label">Total Customers</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statVerifiedCustomers" style="color: #16a34a;">0</div>
+                <div class="stat-label">Verified Licenses</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="statActiveRenters" style="color: #2563eb;">0</div>
+                <div class="stat-label">Active Renters</div>
+            </div>
+        </div>
+
+        <div class="filter-bar">
+            <div class="filter-bar-left">
+                <div class="search-wrapper">
+                    <input type="text" id="customerSearch" class="search-box" placeholder="Search by Customer ID, name, phone, email...">
+                    <button id="customerSearchClear" class="search-clear-btn" type="button" aria-label="Clear search">&times;</button>
+                </div>
+                <select id="customerHubFilter" class="filter-select">
+                    <option value="">All Hub Locations</option>
+                    <option value="cantt">Mathura Cantt</option>
+                    <option value="junction">Mathura Junction</option>
+                    <option value="highway">Highway Hub</option>
+                    <option value="vrindavan">Vrindavan Hub</option>
+                </select>
+            </div>
+            <a href="#register-customer" class="btn-primary">+ Add New Customer</a>
+        </div>
+
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Customer ID</th>
+                        <th>Full Name</th>
+                        <th>Email Address</th>
+                        <th>Phone Number</th>
+                        <th>Driving License</th>
+                        <th>Preferred Hub</th>
+                        <th>Total Rentals</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="customersTableBody">
+                    <!-- Loaded dynamically from LocalStorage -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="form-card" id="register-customer">
+            <h3>Register New Customer Profile</h3>
+            <p>Record verified KYC credentials, Indian mobile contact, and driving license details</p>
+            <form action="#" method="get" onsubmit="return false;">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" placeholder="e.g. Suresh Oberoi" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" placeholder="e.g. suresh@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" placeholder="e.g. 9876543210" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Driving License Number</label>
+                        <input type="text" placeholder="e.g. UP-852024001234" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Preferred Pickup Hub</label>
+                        <select>
+                            <option>Mathura Cantt Hub</option>
+                            <option>Mathura Junction Hub</option>
+                            <option>Highway Express Hub</option>
+                            <option>Vrindavan Gate Hub</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>ID Proof Document</label>
+                        <select>
+                            <option>Aadhaar Card</option>
+                            <option>Passport</option>
+                            <option>Voter ID Card</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="reset" class="btn-secondary">Clear Form</button>
+                    <button type="submit" class="btn-primary">Register Customer</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2026 FleetDrive System - Mini Project Group 14.</p>
+            <div class="footer-links">
+                <a href="../Member-2-Vehicles-Customers/vehicles.html">Vehicles</a>
+                <a href="../Member-3-Bookings-Rentals/bookings.html">Bookings</a>
+                <a href="../Member-4-Maintenance-Payments/maintenance.html">Maintenance</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../common/data-manager.js"></script>
+    <script src="../common/ui-components.js"></script>
+    <script src="vehicles.js"></script>
+</body>
+
+</html>
