@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FleetDrive V3 - Executive Fleet &amp; Rental Operations Dashboard</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script>
+        (function () {
+            const saved = localStorage.getItem('fleetdrive_theme');
+            const systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = saved || (systemDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo-group">
+                <a href="../Member-1-Home/index.html" class="logo">
+                    <img class="img" src="../images/image.png" alt="FleetDrive Logo">
+                    Fleet<span>Drive</span>
+                </a>
+            </div>
+            <div class="header-right">
+                <nav class="navbar" id="navbar">
+                    <a href="../Member-1-Home/index.html" class="nav-link active">Home</a>
+                    <a href="../Member-2-Vehicles-Customers/vehicles.html" class="nav-link">Vehicles</a>
+                    <a href="../Member-2-Vehicles-Customers/customers.html" class="nav-link">Customers</a>
+                    <a href="../Member-3-Bookings-Rentals/bookings.html" class="nav-link">Bookings</a>
+                    <a href="../Member-3-Bookings-Rentals/rentals.html" class="nav-link">Rentals</a>
+                    <a href="../Member-4-Maintenance-Payments/maintenance.html" class="nav-link">Maintenance</a>
+                    <a href="../Member-4-Maintenance-Payments/payments.html" class="nav-link">Payments</a>
+                </nav>
+                <button type="button" class="btn-table-action" onclick="window.FleetUI.showBackupRestoreModal()" style="padding:6px 12px; font-size:12.5px; border-radius:20px; color:#ffffff; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.25);">
+                    💾 Backup / Restore
+                </button>
+                <button id="themeToggle" class="theme-toggle-btn" type="button" aria-label="Toggle Light and Dark Mode" title="Toggle Theme">
+                    <span class="theme-toggle-icon">🌙</span>
+                    <span class="theme-toggle-text">Dark</span>
+                </button>
+                <button class="mobile-nav-toggle" id="mobileNavToggle" type="button" aria-label="Toggle navigation menu">&#9776;</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>Vehicle Rental &amp; Fleet Management Operations</h1>
+            <p>Single source of truth, live multi-tab event synchronization, and complete business workflow control.</p>
+            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                <a href="../Member-2-Vehicles-Customers/vehicles.html" class="btn-primary">Explore Fleet (45 Vehicles)</a>
+                <a href="../Member-3-Bookings-Rentals/bookings.html" class="btn-primary" style="background-color: transparent; border: 1px solid rgba(255,255,255,0.4);">+ New Reservation</a>
+                <button type="button" class="btn-primary" onclick="window.FleetUI.showBackupRestoreModal()" style="background-color: #059669; border:none;">Data Backup &amp; CSV Reports</button>
+            </div>
+        </div>
+    </section>
+
+    <main class="main-container">
+        <!-- 10 Real-Time Operational Statistics -->
+        <section class="overview-section">
+            <div class="section-title">
+                <h2>Real-Time Fleet &amp; Financial Overview</h2>
+                <p>10 dynamic operational metrics calculated from central browser storage</p>
+            </div>
+
+            <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                <div class="stat-card">
+                    <div class="stat-number" id="statTotalVehicles">45</div>
+                    <div class="stat-label">Total Vehicles</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="statAvailableVehicles" style="color: #16a34a;">0</div>
+                    <div class="stat-label">Available Vehicles</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="statReservedVehicles" style="color: #2563eb;">0</div>
+                    <div class="stat-label">Reserved Vehicles</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="statRentedVehicles" style="color: #4f46e5;">0</div>
+                    <div class="stat-label">Rented (On Road)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="statUnderMaintenance" style="color: #dc2626;">0</div>
+                    <div class="stat-label">Under Maintenance</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="statActiveBookings" style="color: #16a34a;">0</div>
+                    <div class="stat-label">Active (Confirmed) Bookings</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="statPendingPayments" style="color: #ea580c;">0</div>
+                    <div class="stat-label">Pending Payments (Orange)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="statConfirmedBookings" style="color: #059669;">0</div>
+                    <div class="stat-label">Confirmed Bookings</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="statTotalPayments" style="color: #059669;">Rs. 0</div>
+                    <div class="stat-label">Total Payments Received</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="statOutstandingAmount" style="color: #b45309;">Rs. 0</div>
+                    <div class="stat-label">Outstanding Balances</div>
+                </div>
+            </div>
+
+            <div id="liveSummary" class="booking-lookup ready" style="margin-bottom: 28px;">
+                <strong>Live Fleet Status:</strong> Calculating central metrics...
+            </div>
+        </section>
+
+        <!-- Global Search for Dashboard Activity -->
+        <section class="dashboard-activity-section" style="margin-bottom: 36px;">
+            <div class="section-title" style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 12px;">
+                <div>
+                    <h2>Live Activity &amp; Operational Feeds</h2>
+                    <p>Recent bookings, verified payments, active dispatches, and return schedules</p>
+                </div>
+                <div class="search-wrapper" style="max-width: 380px;">
+                    <input type="text" id="dashboardSearch" class="search-box" placeholder="Search recent bookings, payments, rentals...">
+                    <button id="dashboardSearchClear" class="search-clear-btn" type="button" aria-label="Clear search">&times;</button>
+                </div>
+            </div>
+
+            <!-- Active Rentals & Upcoming/Overdue Returns Card -->
+            <div class="form-card" style="padding: 20px; margin-bottom: 24px; border-left: 4px solid #2563eb;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 8px;">
+                    <h3 style="font-size: 18px; margin: 0;">Active Dispatches &amp; Return Monitoring</h3>
+                    <a href="../Member-3-Bookings-Rentals/rentals.html" class="category-page-link">Full Rental Operations &rarr;</a>
+                </div>
+                <div class="table-responsive" style="margin-bottom: 0;">
+                    <table id="activeRentalsTable">
+                        <thead>
+                            <tr>
+                                <th>Rental ID</th>
+                                <th>Booking ID</th>
+                                <th>Customer</th>
+                                <th>Vehicle &amp; Plate</th>
+                                <th>Expected Return</th>
+                                <th>Return Schedule</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="activeRentalsBody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Recent Bookings Table Card -->
+            <div class="form-card" style="padding: 20px; margin-bottom: 24px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 8px;">
+                    <h3 style="font-size: 18px; margin: 0;">Recent Reservations</h3>
+                    <a href="../Member-3-Bookings-Rentals/bookings.html" class="category-page-link">Manage All Bookings &rarr;</a>
+                </div>
+                <div class="table-responsive" style="margin-bottom: 0;">
+                    <table id="recentBookingsTable">
+                        <thead>
+                            <tr>
+                                <th>Booking ID</th>
+                                <th>Customer Name</th>
+                                <th>Vehicle</th>
+                                <th>Rental Period</th>
+                                <th>Payable Amount</th>
+                                <th>Booking Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentBookingsBody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Recent Payments Table Card -->
+            <div class="form-card" style="padding: 20px; margin-bottom: 24px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 8px;">
+                    <h3 style="font-size: 18px; margin: 0;">Recent Payment Confirmations</h3>
+                    <a href="../Member-4-Maintenance-Payments/payments.html" class="category-page-link">View All Transactions &rarr;</a>
+                </div>
+                <div class="table-responsive" style="margin-bottom: 0;">
+                    <table id="recentPaymentsTable">
+                        <thead>
+                            <tr>
+                                <th>Payment ID</th>
+                                <th>Booking ID</th>
+                                <th>Customer Name</th>
+                                <th>Method</th>
+                                <th>Amount Paid</th>
+                                <th>Date</th>
+                                <th>Receipt</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentPaymentsBody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- System Audit & Activity Log Card -->
+            <div class="form-card" style="padding: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 8px;">
+                    <h3 style="font-size: 18px; margin: 0;">System Audit &amp; Activity Log</h3>
+                    <span style="font-size: 12px; color: var(--text-muted);">Immutable browser activity trail</span>
+                </div>
+                <div class="table-responsive" style="margin-bottom: 0;">
+                    <table id="auditTable">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Category</th>
+                                <th>Action</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody id="auditBody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Fleet Vehicles -->
+        <section class="featured-section">
+            <div class="section-title">
+                <h2>Featured Fleet Selections</h2>
+                <p>Live operational status badges computed from central single-source database</p>
+            </div>
+
+            <div class="vehicles-grid" id="featuredGrid">
+                <!-- Populated dynamically by home.js -->
+            </div>
+
+            <div class="stat-card" style="text-align: center; margin-top: 32px; padding: 24px;">
+                <p style="font-size: 15px; color: var(--text-muted); margin-bottom: 16px;">
+                    Full catalog of 45 vehicles categorized across SUVs, Sedans, Hatchbacks, and Two-Wheelers.
+                </p>
+                <a href="../Member-2-Vehicles-Customers/vehicles.html" class="btn-primary">View Complete Fleet (45 Vehicles)</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2026 FleetDrive System - Mini Project Group 14.</p>
+            <div class="footer-links">
+                <a href="../Member-2-Vehicles-Customers/vehicles.html">Vehicles</a>
+                <a href="../Member-3-Bookings-Rentals/bookings.html">Bookings</a>
+                <a href="../Member-4-Maintenance-Payments/maintenance.html">Maintenance</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../common/data-manager.js"></script>
+    <script src="../common/ui-components.js"></script>
+    <script src="home.js"></script>
+</body>
+
+</html>
